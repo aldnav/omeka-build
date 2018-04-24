@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    env_file:
+      - mysql/.env
+    expose:
+      - "3306"
+    ports:
+      - "3307:3306"
+  
+  omeka:
+    depends_on:
+      - db
+    image: omeka:dev
+    restart: always
+    links:
+      - db
+
+volumes:
+  db_data: 
