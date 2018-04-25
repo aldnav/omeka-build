@@ -35,5 +35,18 @@ docker exec -it omekabox bash  # debug
 docker stop omekabox
 ```
 
+Deployment:
+```sh
+docker pull aldnav/omeka:alpha
+docker volume create file-vol
+docker volume ls
+docker volume inspect file-vol
+docker run --rm -d \
+-p 80:80 \
+-v file-vol:/var/www/html/files \
+--name omekabox \
+aldnav/omeka:alpha
+```
+
 Omeka installation  
 Go to `http://localhost:4000/install/`
