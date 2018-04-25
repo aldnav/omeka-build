@@ -12,7 +12,7 @@ Requirements as per [Omeka documentation](https://omeka.org/classic/docs/Install
 
 Building the project:
 ```sh
-docker build -t omeka:v1 .
+docker build -t omeka:dev .
 ```
 
 Composing the project:  
@@ -23,7 +23,14 @@ docker-compose up -d
 
 Operating on the docker build:  
 ```sh
-docker run --rm -d -p 4000:80 --name omekabox omeka:dev
+docker volume create file-vol
+docker volume ls
+docker volume inspect file-vol
+docker run --rm -d \
+-p 4000:80 \
+-v file-vol:/var/www/html/files \
+--name omekabox \
+omeka:dev
 docker exec -it omekabox bash  # debug
 docker stop omekabox
 ```
