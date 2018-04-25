@@ -23,7 +23,7 @@ docker-compose up -d
 
 Operating on the docker build:  
 ```sh
-docker run --rm -d -p 4000:80 --name omekabox omeka:v1
+docker run --rm -d -p 4000:80 --name omekabox omeka:dev
 docker exec -it omekabox bash  # debug
 docker stop omekabox
 ```
