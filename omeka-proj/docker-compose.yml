@@ -3,4 +3,5 @@ version: '3.3'
 services:
   omeka:
     image: omeka:dev
+    env_file: .env
     restart: always
