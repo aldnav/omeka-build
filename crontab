@@ -1,0 +1,9 @@
+# OMEKA files and corresponding database/s are backed up every Sunday at 1 pm
+# Information about the server's network traffic is stored in a text file at 10 am every day.
+# m h  dom mon dow   command
+# 0 13 * * 1 omekactl backupfiles
+# 0 13 * * 1 omekactl backupdb
+# 0 10 * * * omekactl netstats
+1 * * * * omekactl backupfiles
+1 * * * * omekactl backupdb
+1 * * * * omekactl netstats

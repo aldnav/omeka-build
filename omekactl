@@ -1,0 +1,24 @@
+#!/bin/bash
+
+case "$1" in
+  "backupdb")
+    #mysqldump -u $DB_USER $DB_NAME > $(date +%Y-%m-%d-%H.%M.%S).sql
+    ssh -o "StrictHostKeyChecking no" -i aldnavomeka.pem ubuntu@ec2-18-188-213-162.us-east-2.compute.amazonaws.com source backdb
+    scp -i aldnavomeka.pem ubuntu@ec2-18-188-213-162.us-east-2.compute.amazonaws.com:*.sql /var/omekabck
+    ssh -i aldnavomeka.pem ubuntu@ec2-18-188-213-162.us-east-2.compute.amazonaws.com rm *.sql
+    ;;
+  "backupfiles")
+    zip -r /var/omekabck/omekafiles-$(date +%Y-%m-%d-%H.%M.%S).zip /var/www/html/
+    ;;
+  "netstats")
+    cd /var/omekalogs/
+    ssh -o "StrictHostKeyChecking no" -i aldnavomeka.pem ubuntu@ec2-18-188-213-162.us-east-2.compute.amazonaws.com \
+      vnstat > nettraf-vnstat-$(date +%Y-%m-%d-%H.%M.%S).txt
+    ssh -o -i aldnavomeka.pem ubuntu@ec2-18-188-213-162.us-east-2.compute.amazonaws.com \
+      bwm-ng -o plain -c 60 >> nettraf-bwm-ng-$(date +%Y-%m-%d-%H.%M.%S).txt
+    ;;
+  *)
+    echo "Commands are: backupdb | backupfiles | netstats"
+    exit 1
+    ;;
+esac
